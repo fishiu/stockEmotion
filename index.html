@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>大数据股民情绪分析</title>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <!--jquery-->
+    <script src="scripts/jquery-3.5.1.js"></script>
+    <!--bootstrap-->
+    <link href="styles/bootstrap-3.3.7.css" rel="stylesheet">
+    <script src="scripts/bootstrap-3.3.7.js"></script>
+    <!--highstock-->
+    <script src="scripts/highstock.js"></script>
+    <!--自动补全-->
+    <script src="scripts/bootstrap3-typeahead.js"></script>
+    <!--自带-->
+    <link href="styles/index.css" rel="stylesheet">
+    <script src="scripts/index.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <!--标题-->
+    <div class="page-header">
+        <h1>实时股民情绪分析 <small>基于 Snow-NLP 的实时大数据分析系统</small></h1>
+    </div>
+
+    <!--分页标签-->
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#singleStock">单只股票</a>
+        </li>
+        <li>
+            <a data-toggle="tab" href="#industry">行业板块</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+
+        <div class="tab-pane in active" id="singleStock">
+            <div style="width: 300px;">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button aria-expanded="false" aria-haspopup="true" class="btn btn-default dropdown-toggle"
+                                data-toggle="dropdown" type="button">SH <span class="caret"></span></button>
+                        <ul class="dropdown-menu" style="min-width:50px">
+                            <li><a class="active" href="#">SH</a></li>
+                            <li><a href="#">SZ</a></li>
+                        </ul>
+                    </div>
+                    <input id="stock-input" class="form-control" placeholder="六位股票代码..." type="text" data-provide="typeahead" autocomplete="off">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="先选择SH还是SZ，检索只匹配前6位号码"><span>?</span></button>
+                        <button class="btn btn-default" type="button">查询</button>
+                    </span>
+                </div>
+            </div>
+            <div class="well">
+                啦啦1
+            </div>
+        </div>
+
+        <div class="tab-pane" id="industry">
+            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip on left</button>
+            <div class="well">
+                啦啦2
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

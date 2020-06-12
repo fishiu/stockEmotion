@@ -1,0 +1,7 @@
+.container {
+    width: 1200px;
+}
+
+.tab-content, .well {
+    margin-top: 20px;
+}
