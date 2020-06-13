@@ -1,0 +1,6 @@
+; mongodb config
+[db]
+hostname = "localhost"
+port = "27017"
+username = "name"
+password = "password"

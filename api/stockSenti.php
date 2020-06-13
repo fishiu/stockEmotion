@@ -3,8 +3,9 @@ $stockId = $_GET['stockId'];
 $stockId = substr($stockId, 2, 6) . '.' . substr($stockId, 0, 2);
 //$stockId = '601939.SH';
 
-$manager = new MongoDB\Driver\Manager("mongodb://psz:heart39100@47.101.35.25:27017");
-
+$config = parse_ini_file("../config.ini");
+$uri = "mongodb://" . $config['username'] . ":" . $config['password'] . "@" . $config['hostname'] . ":" . $config['port'];
+$manager = new MongoDB\Driver\Manager($uri);
 $filter = ['stock_id' => $stockId];
 $options = [
     'projection' => ['time_value' => 1, 'sentiment'=>1],
