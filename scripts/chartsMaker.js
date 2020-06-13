@@ -1,4 +1,4 @@
-function makeChartConfig(stockId, stockName, sentiData) {
+function stockChartConfig(stockId, stockName, sentiData) {
     return {
         // 时间筛选按钮
         rangeSelector: {
@@ -65,5 +65,11 @@ function makeChartConfig(stockId, stockName, sentiData) {
         credits: {
             enabled: false
         }
+    };
+}
+
+function industryChartConfig(industry, sentiData) {
+    return {
+
     };
 }

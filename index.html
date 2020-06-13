@@ -38,15 +38,17 @@
         </li>
     </ul>
 
+    <!--分页内容-->
     <div class="tab-content">
-
+        <!--第一个分页：单只股票-->
         <div class="tab-pane in active" id="singleStock">
+            <!--搜索模块-->
             <div style="width: 350px;">
                 <div class="input-group">
                     <input autocomplete="off" class="form-control" data-provide="typeahead" id="stock-input"
                            placeholder="例：SH600001" type="text">
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button" id="search">查询</button>
+                        <button class="btn btn-primary" type="button" id="stock-search">查询</button>
                         <button class="btn btn-default" data-placement="bottom" data-toggle="tooltip"
                                 style="margin-right: 50px;" title="检索只匹配前8位号码,后面文字仅用于提示">
                             <span>?</span>
@@ -54,13 +56,16 @@
                     </span>
                 </div>
             </div>
-
+            <!--结果展示模块-->
             <div class="panel panel-default">
                 <div class="panel-heading">请在上方输入股票代码</div>
+                <!--初始推荐区，会变成图表区-->
                 <div class="panel-body">
-                    <div id="chart" style="min-width:800px; text-align: center">
+                    <div id="stock-chart" style="min-width:800px; text-align: center">
+                        <!--讲屁话区域-->
                         我们致力于实现对市场风险的精准把控, 专注于市场情绪的实时监控。<br><br>
                         <h4><span class="label label-primary">热门搜索推荐:</span></h4>
+                        <!--推荐按钮-->
                         <div>
                             <div class="btn-group" role="group" style="margin-top: 20px;">
                                 <button class="btn btn-default stock-recommend">SZ000001平安银行</button>
@@ -73,12 +78,41 @@
             </div>
         </div>
 
+        <!--第二个分页：行业板块-->
         <div class="tab-pane" id="industry">
-            <button class="btn btn-default" data-placement="left" data-toggle="tooltip" title="Tooltip on left"
-                    type="button">Tooltip on left
-            </button>
-            <div class="well">
-                啦啦2
+            <!--搜索模块-->
+            <div style="width: 350px;">
+                <div class="input-group">
+                    <input autocomplete="off" class="form-control" data-provide="typeahead" id="industry-input"
+                           placeholder="例：建筑工程" type="text">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" id="industry-search">查询</button>
+                        <button class="btn btn-default" data-placement="bottom" data-toggle="tooltip"
+                                style="margin-right: 50px;" title="检索需要精确的行业名称，输入框可以模糊匹配">
+                            <span>?</span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <!--结果展示模块-->
+            <div class="panel panel-default">
+                <div class="panel-heading">请在上方输入行业名称</div>
+                <!--初始推荐区，会变成图表区-->
+                <div class="panel-body">
+                    <div id="industry-chart" style="min-width:800px; text-align: center">
+                        <!--讲屁话区域-->
+                        我们致力于实现对市场风险的精准把控, 专注于市场情绪的实时监控。<br><br>
+                        <h4><span class="label label-primary">热门搜索推荐:</span></h4>
+                        <!--推荐按钮-->
+                        <div>
+                            <div class="btn-group" role="group" style="margin-top: 20px;">
+                                <button class="btn btn-default industry-recommend">建筑工程</button>
+                                <button class="btn btn-default industry-recommend">银行</button>
+                                <button class="btn btn-default industry-recommend">家用电器</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
