@@ -17,6 +17,6 @@ $cursor = $manager->executeQuery('scrapy_senti.sinanews_senti', $query);
 $res = null;
 foreach ($cursor as $document) {
     $arr_obj = (array)$document;
-    $res[] = [$arr_obj['time_value']/1000000, $arr_obj['sentiment']];
+    $res[] = [$arr_obj['time_value']/1000000, round(10 * $arr_obj['sentiment'],3)];
 }
 echo json_encode($res);

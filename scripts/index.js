@@ -56,7 +56,6 @@ $(function () {
     });
 })
 
-
 $(function () {
     // 处理按钮点击
     $('#singleStock').find('#search').click(function () {
@@ -64,22 +63,29 @@ $(function () {
         queryStr = queryStr.substring(0, 8);
         console.log("检索ID为：");
         console.log(queryStr);
-        // let idPattern = /^(SZ|SH)\d{6}/;
-        // if (!idPattern.test(queryStr)) {
-        //     // alert("股票ID格式不正确！")
-        //     $('#singleStock.tab-pane').prepend(
-        //         `<div class="alert alert-danger alert-dismissable hide" role="alert">
-        //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        //                 <span aria-hidden="true">&times;</span>
-        //             </button>
-        //             <strong>这里是错误信息</strong>
-        //         </div>`
-        //     )
-        //     return;
-        // }
+        let idPattern = /^(SZ|SH)\d{6}/;
+        if (!idPattern.test(queryStr)) {
+            // alert("股票ID格式不正确！")
+            $('#singleStock.tab-pane').prepend(
+                `<div class="alert alert-danger alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>请输入正确格式的股票代码！</strong>
+                </div>`
+            )
+            return;
+        }
         createChart(queryStr);
     });
 })
+
+$(function () {
+    $('.stock-recommend').click(function () {
+        let queryStr = $(this).text().substring(0, 8);
+        createChart(queryStr);
+    });
+});
 
 
 // 查询并生成图表
@@ -89,6 +95,9 @@ function createChart(stockId) {
         type: "get",
         data: {'stockId': stockId},
         dataType:"json",
+        beforeSend: function () {
+            $('#singleStock').find('.panel-heading').text('查询中...请耐心等待...')
+        },
         success: function (sentiData) {
             console.log('查询成功');
             console.log(sentiData);
@@ -96,11 +105,13 @@ function createChart(stockId) {
             $('#singleStock').find('.panel-heading').html(`
             ${myStockInfo['name']} [${stockId}]<span style="padding: 10px;"></span>行业：${myStockInfo['industry']}
             `)
+            let panelBody = $('#singleStock').find('.panel-body #chart');
+            panelBody.text('');
+            panelBody.css('height', '450px'); // panelBody.css('text-align', 'left');
             Highcharts.stockChart('chart', makeChartConfig(stockId, myStockInfo['name'], sentiData));
         },
         error: function () {
             alert('查询失败');
         }
     })
-    $('#singleStock').find('.panel-heading').text('查询中...请耐心等待...')
 }
