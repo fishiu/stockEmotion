@@ -168,7 +168,7 @@ function createChart(queryStr, type) {
             let myStockInfo;
             if (type === 'stock') {
                 myStockInfo = code2Name(queryStr);
-                node.find('.panel-heading').html(`${myStockInfo['name']} [${queryStr}]<span style="padding: 10px;"></span>行业：${myStockInfo['industry']}`);
+                node.find('.panel-heading').html(`${myStockInfo['name']} [${queryStr}]<span style="padding: 10px;"></span>行业：<button class="btn btn-success btn-xs" onclick="jumpToIndustry($(this).text())">${myStockInfo['industry']}</button>`);
             } else {
                 node.find('.panel-heading').html(`行业：${queryStr}`);
             }
@@ -182,4 +182,10 @@ function createChart(queryStr, type) {
             makeAlert(type, '未知错误，请联系管理员。');
         }
     });
+}
+
+function jumpToIndustry(queryStr) {
+    alert('clicked');
+    $('#industry-tab').click();
+    createChart(queryStr, 'industry');
 }
