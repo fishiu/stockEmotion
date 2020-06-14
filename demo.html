@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>demo</title>
+    <!--jquery-->
+    <script src="scripts/jquery-3.5.1.js"></script>
+    <!--bootstrap-->
+    <link href="styles/bootstrap-3.3.7.css" rel="stylesheet">
+    <script src="scripts/bootstrap-3.3.7.js"></script>
+    <!--highstock-->
+    <script src="scripts/highstock.js"></script>
+    <!--typeahead 自动补全-->
+    <script src="scripts/bootstrap3-typeahead.js"></script>
+</head>
+<body>
+<div class="container" style="width: 1200px;">
+    <div style="min-width:800px; height: 500px;" id="charts"></div>
+</div>
+</body>
+
+<script>
+    let senti = [];
+    let price = [];
+    $(function () {
+        $.ajax({
+            url: '/static/demo.json',
+            async: false,
+            success: function (sentiData) {
+                console.log('sentiData loaded')
+                for (let i = 0; i < sentiData.length; i++) {
+                    console.log(sentiData[i]);
+                    senti.push([1590973200000 + i * 1800000, sentiData[i] * 1500]);
+                }
+            }
+        });
+        $.ajax({
+            url: '/static/price.json',
+            async: false,
+            success: function (priceData) {
+                console.log('priceData loaded')
+                for (let i = 0; i < priceData.length; i++) {
+                    price.push([1590973200000 + i * 1800000, priceData[i]]);
+                }
+            }
+        });
+        console.log(senti);
+        console.log(price);
+        Highcharts.stockChart('charts', {
+            rangeSelector: {
+                buttons: [
+                    {
+                        type: 'hour',
+                        count: 6,
+                        text: '6h'
+                    }, {
+                        type: 'day',
+                        count: 1,
+                        text: '1D'
+                    }, {
+                        type: 'day',
+                        count: 5,
+                        text: '5D'
+                    }, {
+                        type: 'month',
+                        count: 1,
+                        text: '1M'
+                    }, {
+                        type: 'month',
+                        count: 3,
+                        text: '3M'
+                    }, {
+                        type: 'ytd',
+                        text: 'YTD'
+                    }, {
+                        type: 'all',
+                        count: 1,
+                        text: 'All'
+                    }
+                ],
+                selected: 2,
+                inputEnabled: true  //支持日期选择的窗口
+            },
+
+            title: {
+                text: 'demo'
+            },
+
+            series: [
+                {
+                    name: 'senti',
+                    data: senti,
+                    dataGrouping: {
+                        enabled: false
+                    }
+                },
+                {
+                    name: 'price',
+                    data: price,
+                    dataGrouping: {
+                        enabled: false
+                    }
+                }
+            ],
+
+            plotOptions: {
+                series: {
+                    showInLegend: true
+                }
+            },
+
+            tooltip: {
+                split: false,
+                shared: true
+            },
+
+            //版权信息
+            credits: {
+                enabled: false
+            }
+        });
+
+    })
+</script>
+</html>
