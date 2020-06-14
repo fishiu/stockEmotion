@@ -3,6 +3,18 @@ $(function () {
     $("[data-toggle='tooltip']").tooltip();
 });
 
+function makeAlert(type, message) {
+    $(`#${type}.tab-pane`).prepend(
+        `<div class="alert alert-danger alert-dismissable" role="alert" style="width: 300px;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>${message}</strong>
+                </div>`
+    )
+}
+
+
 let stockInfo;
 let industryList;
 
@@ -13,12 +25,13 @@ function getStockInfo() {
         url: '/static/stockInfo.json',
         async: false,
         success: function (infoData) {
-        stockInfo = infoData;
-        console.log("获取股票信息成功");
-        for (let i = 0; i < stockInfo.length; i++) {
-            stockIdList.push(stockInfo[i]['code']);
+            stockInfo = infoData;
+            console.log("获取股票信息成功");
+            for (let i = 0; i < stockInfo.length; i++) {
+                stockIdList.push(stockInfo[i]['code']);
+            }
         }
-    }});
+    });
     console.log('hi');
     return stockIdList;
 }
@@ -30,7 +43,8 @@ function getIndustryList() {
         success: function (infoData) {
             industryList = infoData;
             console.log("获取行业列表成功");
-        }});
+        }
+    });
     return industryList;
 }
 
@@ -88,22 +102,15 @@ $(function () {
 
 // 处理按钮点击
 $(function () {
-    $('#singleStock').find('#stock-search').click(function () {
-        let queryStr = $('#singleStock').find('#stock-input').text();
+    $('#stock').find('#stock-search').click(function () {
+        let queryStr = $('#stock').find('#stock-input').text();
         queryStr = queryStr.substring(0, 8);
         console.log("检索ID为：");
         console.log(queryStr);
         let idPattern = /^(SZ|SH)\d{6}/;
         if (!idPattern.test(queryStr)) {
             // alert("股票ID格式不正确！")
-            $('#singleStock.tab-pane').prepend(
-                `<div class="alert alert-danger alert-dismissable" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <strong>请输入正确格式的股票代码！</strong>
-                </div>`
-            )
+            makeAlert('stock', '请输入正确格式的股票代码！');
             return;
         }
         createChart(queryStr, 'stock');
@@ -115,14 +122,7 @@ $(function () {
         console.log(queryStr);
         if (queryStr in industryList) {
             // alert("行业名称不正确！")
-            $('#singleStock.tab-pane').prepend(
-                `<div class="alert alert-danger alert-dismissable" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <strong>查询的行业不存在！</strong>
-                </div>`
-            )
+            makeAlert('stock', '行业名称不正确！');
             return;
         }
         createChart(queryStr, 'industry');
@@ -145,18 +145,24 @@ $(function () {
 // 查询并生成图表
 function createChart(queryStr, type) {
     let node;
-    if (type === 'stock') node = $('#singleStock');
+    if (type === 'stock') node = $('#stock');
     else node = $('#industry');
 
     $.ajax({
         url: '/api/stockSenti.php',
         type: "get",
         data: {'queryStr': queryStr, 'type': type},
-        dataType:"json",
+        dataType: "json",
         beforeSend: function () {
             node.find('.panel-heading').text('查询中...请耐心等待...')
         },
-        success: function (sentiData) {
+        success: function (data) {
+            if (!data['success']) {
+                console.log("数据库查询失败：" + data['message']);
+                makeAlert("数据库查询出错");
+                return;
+            }
+            let sentiData = data['sentiData'];
             console.log('查询成功');
             console.log(sentiData);
             let myStockInfo;
@@ -173,7 +179,7 @@ function createChart(queryStr, type) {
             else Highcharts.stockChart('industry-chart', industryChartConfig(queryStr, sentiData));
         },
         error: function () {
-            alert('查询失败');
+            makeAlert(type, '未知错误，请联系管理员。');
         }
     });
 }

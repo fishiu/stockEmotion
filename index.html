@@ -5,6 +5,7 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>大数据股民情绪分析</title>
+    <!--livereload-->
     <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
     <!--jquery-->
     <script src="scripts/jquery-3.5.1.js"></script>
@@ -13,7 +14,7 @@
     <script src="scripts/bootstrap-3.3.7.js"></script>
     <!--highstock-->
     <script src="scripts/highstock.js"></script>
-    <!--自动补全-->
+    <!--typeahead 自动补全-->
     <script src="scripts/bootstrap3-typeahead.js"></script>
     <!--自带-->
     <link href="styles/index.css" rel="stylesheet">
@@ -31,7 +32,7 @@
     <!--分页标签-->
     <ul class="nav nav-tabs">
         <li class="active">
-            <a data-toggle="tab" href="#singleStock">单只股票</a>
+            <a data-toggle="tab" href="#stock">单只股票</a>
         </li>
         <li>
             <a data-toggle="tab" href="#industry">行业板块</a>
@@ -41,7 +42,7 @@
     <!--分页内容-->
     <div class="tab-content">
         <!--第一个分页：单只股票-->
-        <div class="tab-pane in active" id="singleStock">
+        <div class="tab-pane in active" id="stock">
             <!--搜索模块-->
             <div style="width: 350px;">
                 <div class="input-group">
@@ -64,13 +65,13 @@
                     <div id="stock-chart" style="min-width:800px; text-align: center">
                         <!--讲屁话区域-->
                         我们致力于实现对市场风险的精准把控, 专注于市场情绪的实时监控。<br><br>
-                        <h4><span class="label label-primary">热门搜索推荐:</span></h4>
+                        <h4><span class="label label-primary">热门股票推荐:</span></h4>
                         <!--推荐按钮-->
                         <div>
                             <div class="btn-group" role="group" style="margin-top: 20px;">
                                 <button class="btn btn-default stock-recommend">SZ000001平安银行</button>
-                                <button class="btn btn-default stock-recommend">SZ000001平安银行</button>
-                                <button class="btn btn-default stock-recommend">SZ000001平安银行</button>
+                                <button class="btn btn-default stock-recommend">SZ300750宁德时代</button>
+                                <button class="btn btn-default stock-recommend">SH601939建设银行</button>
                             </div>
                         </div>
                     </div>
@@ -88,7 +89,7 @@
                     <span class="input-group-btn">
                         <button class="btn btn-primary" type="button" id="industry-search">查询</button>
                         <button class="btn btn-default" data-placement="bottom" data-toggle="tooltip"
-                                style="margin-right: 50px;" title="检索需要精确的行业名称，输入框可以模糊匹配">
+                                style="margin-right: 50px;" title="需要精确的行业名称，可以模糊匹配">
                             <span>?</span>
                         </button>
                     </span>
@@ -102,7 +103,7 @@
                     <div id="industry-chart" style="min-width:800px; text-align: center">
                         <!--讲屁话区域-->
                         我们致力于实现对市场风险的精准把控, 专注于市场情绪的实时监控。<br><br>
-                        <h4><span class="label label-primary">热门搜索推荐:</span></h4>
+                        <h4><span class="label label-primary">热门行业推荐:</span></h4>
                         <!--推荐按钮-->
                         <div>
                             <div class="btn-group" role="group" style="margin-top: 20px;">
