@@ -159,8 +159,9 @@ function createChart(queryStr, type) {
         success: function (sentiData) {
             console.log('查询成功');
             console.log(sentiData);
+            let myStockInfo;
             if (type === 'stock') {
-                let myStockInfo = code2Name(queryStr);
+                myStockInfo = code2Name(queryStr);
                 node.find('.panel-heading').html(`${myStockInfo['name']} [${queryStr}]<span style="padding: 10px;"></span>行业：${myStockInfo['industry']}`);
             } else {
                 node.find('.panel-heading').html(`行业：${queryStr}`);
@@ -168,7 +169,7 @@ function createChart(queryStr, type) {
             let panelBody = node.find(`.panel-body #${type}-chart`);
             panelBody.text('');
             panelBody.css('height', '450px');
-            if (type === 'stock') Highcharts.stockChart('stock-chart', stockChartConfig(queryStr, stockInfo['name'], sentiData));
+            if (type === 'stock') Highcharts.stockChart('stock-chart', stockChartConfig(queryStr, myStockInfo['name'], sentiData));
             else Highcharts.stockChart('industry-chart', industryChartConfig(queryStr, sentiData));
         },
         error: function () {
