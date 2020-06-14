@@ -24,33 +24,32 @@
 <script>
     let senti = [];
     let price = [];
+    let priceData = [];
+    let sentiData = [];
     $(function () {
         $.ajax({
             url: '/static/demo.json',
             async: false,
-            success: function (sentiData) {
-                console.log('sentiData loaded')
-                for (let i = 0; i < sentiData.length; i++) {
-                    console.log(sentiData[i]);
-                    senti.push([1589731200000 + i * 1800000, sentiData[i] * 100]);
-                }
+            success: function (sentiD) {
+                sentiData = sentiD;
             }
         });
 
         $.ajax({
             url: '/static/price.json',
             async: false,
-            success: function (priceData) {
-                console.log('priceData loaded')
-                for (let i = 0; i < senti.length; i++) {
-                    if (priceData[i] > 0)
-                        price.push([1589731200000 + i * 1800000, priceData[i]-1300]);
-                }
+            success: function (priceD) {
+                priceData = priceD;
             }
         });
 
-        console.log(senti);
-        console.log(price);
+        for (let i = 0; i < sentiData.length; i++) {
+            if (Math.abs(priceData[i] - 0) > 0.00001) {
+                senti.push([1589731200000 + i * 1800000, sentiData[i] * 50]);
+                price.push([1589731200000 + i * 1800000, priceData[i]]);
+            }
+        }
+
         Highcharts.stockChart('charts', {
             rangeSelector: {
                 buttons: [
@@ -83,7 +82,7 @@
                         text: 'All'
                     }
                 ],
-                selected: 2,
+                selected: 6,
                 inputEnabled: true  //支持日期选择的窗口
             },
 
@@ -109,6 +108,9 @@
             ],
 
             plotOptions: {
+                // line: {
+                //     gapSize: 30
+                // },
                 series: {
                     showInLegend: true
                 }
