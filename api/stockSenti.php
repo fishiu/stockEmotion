@@ -1,5 +1,5 @@
 <?php
-$stockId = $_GET['stockId'];
+$stockId = $_GET['queryStr'];
 $stockId = substr($stockId, 2, 6) . '.' . substr($stockId, 0, 2);
 //$stockId = '601939.SH';
 

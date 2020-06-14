@@ -165,10 +165,10 @@ function createChart(queryStr, type) {
             } else {
                 node.find('.panel-heading').html(`行业：${queryStr}`);
             }
-            let panelBody = node.find('.panel-body #chart');
+            let panelBody = node.find(`.panel-body #${type}-chart`);
             panelBody.text('');
             panelBody.css('height', '450px');
-            if (type === 'stock') Highcharts.stockChart('stock-chart', stockChartConfig(queryStr, myStockInfo['name'], sentiData));
+            if (type === 'stock') Highcharts.stockChart('stock-chart', stockChartConfig(queryStr, stockInfo['name'], sentiData));
             else Highcharts.stockChart('industry-chart', industryChartConfig(queryStr, sentiData));
         },
         error: function () {
