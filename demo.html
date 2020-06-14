@@ -32,20 +32,23 @@
                 console.log('sentiData loaded')
                 for (let i = 0; i < sentiData.length; i++) {
                     console.log(sentiData[i]);
-                    senti.push([1590973200000 + i * 1800000, sentiData[i] * 1500]);
+                    senti.push([1589731200000 + i * 1800000, sentiData[i] * 100]);
                 }
             }
         });
+
         $.ajax({
             url: '/static/price.json',
             async: false,
             success: function (priceData) {
                 console.log('priceData loaded')
-                for (let i = 0; i < priceData.length; i++) {
-                    price.push([1590973200000 + i * 1800000, priceData[i]]);
+                for (let i = 0; i < senti.length; i++) {
+                    if (priceData[i] > 0)
+                        price.push([1589731200000 + i * 1800000, priceData[i]-1300]);
                 }
             }
         });
+
         console.log(senti);
         console.log(price);
         Highcharts.stockChart('charts', {
