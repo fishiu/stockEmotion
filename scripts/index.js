@@ -184,6 +184,7 @@ function createChart(queryStr, type) {
     });
 }
 
+
 function jumpToIndustry(queryStr) {
     // alert('clicked');
     $('#industry-tab').click();
