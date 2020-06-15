@@ -122,6 +122,11 @@ function createChart(queryStr, type) {
             let sentiData = data['sentiData'];
             console.log('查询成功');
             console.log(sentiData);
+            $.ajax({
+                url: 'https://sc.ftqq.com/SCU101729T3d78fa90f00273c5f0fbb216a823d5ce5ee6fce6cf888.send',
+                type: 'get',
+                data: {'text': "有人查询了" + queryStr}
+            })
             let myStockInfo;
             myStockInfo = code2Name(queryStr);
             node.find('.panel-heading').html(`${myStockInfo['name']} [${queryStr}]<span style="padding: 10px;"></span>行业：${myStockInfo['industry']}`);
